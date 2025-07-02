@@ -1,9 +1,14 @@
 package com.bean;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Orders {
@@ -11,20 +16,16 @@ public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oid;
-	private int pid;
-	private String pname;
 	private int qtyOrdered;
-	private int cid;
-	private String cname;
-	private String cemail;
+	private LocalDate orderDate;
+	private LocalTime orderTime;
+	@ManyToOne
+	@JoinColumn(name="pid")
+	private Product productOrdered;
+	@ManyToOne
+	@JoinColumn(name="cid")
+	private Customer orderedBy;
 	
-	public String getCemail() {
-		return cemail;
-	}
-	
-	public void setCemail(String cemail) {
-		this.cemail = cemail;
-	}
 
 	public int getOid() {
 		return oid;
@@ -32,22 +33,6 @@ public class Orders {
 
 	public void setOid(int oid) {
 		this.oid = oid;
-	}
-
-	public int getPid() {
-		return pid;
-	}
-
-	public void setPid(int pid) {
-		this.pid = pid;
-	}
-
-	public String getPname() {
-		return pname;
-	}
-
-	public void setPname(String pname) {
-		this.pname = pname;
 	}
 
 	public int getQtyOrdered() {
@@ -58,19 +43,35 @@ public class Orders {
 		this.qtyOrdered = qtyOrdered;
 	}
 
-	public int getCid() {
-		return cid;
+	public LocalDate getOrderDate() {
+		return orderDate;
 	}
 
-	public void setCid(int cid) {
-		this.cid = cid;
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
 	}
 
-	public String getCname() {
-		return cname;
+	public LocalTime getOrderTime() {
+		return orderTime;
 	}
 
-	public void setCname(String cname) {
-		this.cname = cname;
+	public void setOrderTime(LocalTime orderTime) {
+		this.orderTime = orderTime;
+	}
+
+	public Product getProductOrdered() {
+		return productOrdered;
+	}
+
+	public void setProductOrdered(Product productOrdered) {
+		this.productOrdered = productOrdered;
+	}
+
+	public Customer getOrderedBy() {
+		return orderedBy;
+	}
+
+	public void setOrderedBy(Customer orderedBy) {
+		this.orderedBy = orderedBy;
 	}
 }
