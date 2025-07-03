@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Update Product Price | Admin | Sporty Shoes</title>
+</head>
+<body>
+
+<h3>Update Product Price</h3>
+	
+	<p th:if="${error}" th:text="${error}" style="color:red"></p>
+	<p th:if="${msg}" th:text="${msg}" style="color:green"></p>
+	
+	<form action="/admin/updatePrice" method="post">
+		<label>Product Id:</label>
+		<input type="number" name="pid" required><br/><br/>
+		
+		<label>Updated Price:</label>
+		<input type="number" name="price" required><br/><br/>
+		
+		<input type="submit" value="Update Price" name=updatePrice>
+		<input type="reset" value="Reset" name="reset">
+	</form>
+	
+	<br/>
+	<br/>
+	<a href="/admin/dashboard">Back</a>
+
+
+
+
+</body>
+</html>

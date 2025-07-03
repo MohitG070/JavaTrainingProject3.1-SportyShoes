@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Delete Product | Admin | Sporty Shoes</title>
+</head>
+<body>
+
+<h3>Delete Product by PID</h3>
+	
+	<p th:if="${error}" th:text="${error}" style="color:red"></p>
+	<p th:if="${msg}" th:text="${msg}" style="color:green"></p>
+	
+	<form action="/admin/deleteProduct" method="post">
+		<label>Product Id:</label>
+		<input type="number" name="pid" required><br/><br/>
+		
+		<input type="submit" value="Delete Product" name=deleteProduct>
+		<input type="reset" value="Reset" name="reset">
+	</form>
+	
+	<br/>
+	<br/>
+	<a href="/admin/dashboard">Back</a>
+
+
+
+
+</body>
+</html>

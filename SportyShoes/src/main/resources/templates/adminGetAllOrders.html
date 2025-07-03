@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>All Orders | Admin | Sporty Shoes</title>
+
+<style>
+	table {
+		border:1.5px solid;
+	}
+	
+	td {
+		border:1px solid;
+		text-align:center;
+		padding:5px;
+	}
+</style>
+
+</head>
+<body>
+
+	<h3>All Orders</h3>
+	<br/>
+	
+	<p th:if="${error}" th:text="${error}" style="color:red"></p>
+	
+	<table>
+		<thead>
+			<tr>
+				<td>Order ID</td>
+				<td>Product ID</td>
+				<td>Product Ordered</td>
+				<td>Quantity Ordered</td>
+				<td>Order Value</td>
+				<td>Category</td>
+				<td>Customer ID</td>
+				<td>Customer Name</td>
+				<td>Customer Email</td>
+				<td>Order Date</td>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="ord : ${orders}">
+				<td th:text="${ord.oid}"></td>
+				<td th:text="${ord.productOrdered.pid}"></td>
+				<td th:text="${ord.productOrdered.pname}"></td>
+				<td th:text="${ord.qtyOrdered}"></td>
+				<td th:text="${ord.qtyOrdered * ord.productOrdered.price}"></td>
+				<td th:text="${ord.productOrdered.category}"></td>
+				<td th:text="${ord.orderedBy.cid}"></td>
+				<td th:text="${ord.orderedBy.cname}"></td>
+				<td th:text="${ord.orderedBy.cemail}"></td>
+				<td th:text="${ord.orderDate}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<br/>
+	<br/>
+	<a href="/admin/dashboard">Back</a>
+
+
+</body>
+</html>

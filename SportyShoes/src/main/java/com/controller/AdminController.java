@@ -1,5 +1,8 @@
 package com.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bean.Admin;
+import com.bean.Customer;
+import com.bean.Orders;
 import com.bean.Product;
 import com.service.AdminService;
 
@@ -55,6 +60,15 @@ public class AdminController {
 		return "adminUpdateQty";
 	}
 	
+	@GetMapping("/ordersByCategory")
+	public String showAdminOrdersByCategory(Model mm) {
+		return "adminGetOrdersByCategory";
+	}
+	
+	@GetMapping("/ordersByDate")
+	public String showAdminOrdersByDate(Model mm) {
+		return "adminGetOrdersByDate";
+	}
 	
 	
 	@PostMapping("/login")
@@ -125,10 +139,10 @@ public class AdminController {
 	
 	@PostMapping("/updatePrice")
 	public String adminUpdatePrice(Model mm, @ModelAttribute Product product) {
-		int result = adminService.updateProduct(product);
+		int result = adminService.updateProductPrice(product);
 		
 		if (result == 0) {
-			mm.addAttribute("error", "Product not Present");
+			mm.addAttribute("error", "Product not present");
 		}
 		else {
 			mm.addAttribute("msg", "Product price updated successfully");
@@ -140,10 +154,10 @@ public class AdminController {
 	
 	@PostMapping("/updateQty")
 	public String adminUpdateQty(Model mm, @ModelAttribute Product product) {
-		int result = adminService.updateProduct(product);
+		int result = adminService.updateProductQty(product);
 		
 		if (result == 0) {
-			mm.addAttribute("error", "Product not Present");
+			mm.addAttribute("error", "Product not present");
 		}
 		else {
 			mm.addAttribute("msg", "Product quantity updated successfully");
@@ -153,10 +167,70 @@ public class AdminController {
 	}
 	
 	
+	@GetMapping("/allProduct")
+	public String adminAllProduct(Model mm) {
+		List<Product> allProduct = adminService.getAllProducts();
+		
+		mm.addAttribute("product", allProduct);			
+		if (allProduct.isEmpty()) {
+			mm.addAttribute("error", "No products found");			
+		}
+
+		return "adminGetAllProduct";
+	}
 	
 	
+	@GetMapping("/allOrders")
+	public String adminAllOrders(Model mm) {
+		List<Orders> allOrders = adminService.getAllOrders();
+		
+		mm.addAttribute("orders", allOrders);			
+		if (allOrders.isEmpty()) {
+			mm.addAttribute("error", "No orders found");			
+		}
+
+		return "adminGetAllOrders";
+	}
 	
 	
+	@PostMapping("/ordersByCategory")
+	public String adminOrdersByCategory(Model mm, @RequestParam String category) {
+		List<Orders> ordersByCategory = adminService.getOrdersByCategory(category);
+		
+		mm.addAttribute("orders", ordersByCategory);			
+		if (ordersByCategory.isEmpty()) {
+			mm.addAttribute("error", "No orders found");			
+		}
+
+		return "adminGetOrdersByCategory";
+	}
+	
+	
+	@PostMapping("/ordersByDate")
+	public String adminOrdersByDate(Model mm, @RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
+		List<Orders> ordersByDate = adminService.getOrdersByDate(fromDate, toDate);
+		
+		mm.addAttribute("orders", ordersByDate);			
+		if (ordersByDate.isEmpty()) {
+			mm.addAttribute("error", "No orders found");			
+		}
+		
+		return "adminGetOrdersByDate";
+	}
+	
+
+	@GetMapping("/allCustomer")
+	public String adminAllCustomer(Model mm) {
+		List<Customer> allCustomer = adminService.getAllCustomer();
+		
+		mm.addAttribute("customer", allCustomer);			
+		if (allCustomer.isEmpty()) {
+			mm.addAttribute("error", "No customers found");			
+		}
+		
+		return "adminGetAllCustomer";
+	}
+
 	
 	
 	

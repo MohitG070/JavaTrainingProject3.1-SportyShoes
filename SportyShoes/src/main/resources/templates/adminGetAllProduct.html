@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>All Products | Admin | Sporty Shoes</title>
+
+<style>
+	table {
+		border:1.5px solid;
+	}
+	
+	td {
+		border:1px solid;
+		text-align:center;
+		padding:5px;
+	}
+</style>
+
+</head>
+<body>
+
+	<h3>All Products</h3>
+	<br/>
+	
+	<p th:if="${error}" th:text="${error}" style="color:red"></p>
+	
+	<table>
+		<thead>
+			<tr>
+				<td>Product ID</td>
+				<td>Name</td>
+				<td>Price</td>
+				<td>Quantity Available</td>
+				<td>Category</td>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="pro : ${product}">
+				<td th:text="${pro.pid}"></td>
+				<td th:text="${pro.pname}"></td>
+				<td th:text="${pro.price}"></td>
+				<td th:text="${pro.qty}"></td>
+				<td th:text="${pro.category}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<br/>
+	<br/>
+	<a href="/admin/dashboard">Back</a>
+
+
+</body>
+</html>

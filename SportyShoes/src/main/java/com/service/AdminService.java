@@ -94,14 +94,31 @@ public class AdminService {
 	}
 	
 	
-	public int updateProduct(Product product) {
+	public int updateProductPrice(Product product) {
 		Optional<Product> result = productRepository.findById(product.getPid());
 		
 		if (result.isEmpty()) {
 			return 0;
 		}
 		else {
-			productRepository.save(product);
+			Product oriProduct = result.get();
+			oriProduct.setPrice(product.getPrice());
+			productRepository.save(oriProduct);
+			return 1;
+		}
+	}
+	
+	
+	public int updateProductQty(Product product) {
+		Optional<Product> result = productRepository.findById(product.getPid());
+		
+		if (result.isEmpty()) {
+			return 0;
+		}
+		else {
+			Product oriProduct = result.get();
+			oriProduct.setQty(product.getQty());
+			productRepository.save(oriProduct);
 			return 1;
 		}
 	}

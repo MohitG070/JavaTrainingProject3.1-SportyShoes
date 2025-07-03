@@ -1,7 +1,6 @@
 package com.bean;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +17,6 @@ public class Orders {
 	private int oid;
 	private int qtyOrdered;
 	private LocalDate orderDate;
-	private LocalTime orderTime;
 	@ManyToOne
 	@JoinColumn(name="pid")
 	private Product productOrdered;
@@ -49,14 +47,6 @@ public class Orders {
 
 	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
-	}
-
-	public LocalTime getOrderTime() {
-		return orderTime;
-	}
-
-	public void setOrderTime(LocalTime orderTime) {
-		this.orderTime = orderTime;
 	}
 
 	public Product getProductOrdered() {
