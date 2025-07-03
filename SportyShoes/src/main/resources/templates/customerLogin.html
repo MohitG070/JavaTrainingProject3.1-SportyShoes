@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Customer Login | Sporty Shoes</title>
+</head>
+<body>
+<h2>Customer Login</h2>
+<h4>Login to browse and order the Products</h4>
+
+
+<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+<form action="/customer/login" method="post">
+	
+	<label>Email:</label>
+	<input type="email" name="cemail" required><br/><br/>
+	<label>Password:</label>
+	<input type="password" name="cpassword" required><br/><br/>
+	
+	<input type="submit" value="Login" name="login">
+	<input type="reset" value="Reset" name="reset">
+
+</form>
+	<br/>
+	Don't have an Account SignUp <a href="/customer/signup">HERE!!</a>
+	
+	<br/><br/>
+	<a href="/">Back</a>
+
+</body>
+</html>

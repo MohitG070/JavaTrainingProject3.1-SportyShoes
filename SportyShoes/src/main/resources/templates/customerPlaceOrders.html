@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Place Order | Customer | Sporty Shoes</title>
+</head>
+<body>
+
+<h3>Place Order</h3>
+	
+	<p th:if="${error}" th:text="${error}" style="color:red"></p>
+	<p th:if="${msg}" th:text="${msg}" style="color:green"></p>
+	
+	<form action="/customer/placeOrders" method="post">
+		<label>Product Id:</label>
+		<input type="number" name="pid" required><br/><br/>
+		
+		<label>Quantity:</label>
+		<input type="number" name="qtyOrdered" required><br/><br/>
+		
+		<input type="submit" value="Place Order" name=placeOrder>
+		<input type="reset" value="Reset" name="reset">
+	</form>
+	
+	<br/>
+	<br/>
+	<a href="/customer/dashboard">Back</a>
+
+</body>
+</html>

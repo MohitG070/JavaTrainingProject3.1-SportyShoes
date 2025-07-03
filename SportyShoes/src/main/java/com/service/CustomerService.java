@@ -1,12 +1,12 @@
 package com.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bean.Admin;
 import com.bean.Customer;
 import com.bean.Orders;
 import com.bean.Product;
@@ -27,15 +27,13 @@ public class CustomerService {
 	OrdersRepository ordersRepository;
 	
 	public int customerLogin(Customer customer) {
-		Optional<Customer> result = customerRepository.findById(customer.getCid());
+		Customer user = customerRepository.findByCustomerEmail(customer.getCemail());
 		
-		if (result.isEmpty()) {
+		if (user == null) {
 			return 0;
 		}
-		
-		Customer user = result.get();
-		if (user.getCpassword().equals(customer.getCpassword())) {
-			return 1;
+		else if (user.getCpassword().equals(customer.getCpassword())) {
+			return user.getCid();
 		}
 		else {
 			return -1;
@@ -43,15 +41,15 @@ public class CustomerService {
 	}
 	
 	
-	public String customerSignUp(Customer customer) {
+	public int customerSignUp(Customer customer) {
+
 		Customer result = customerRepository.findByCustomerEmail(customer.getCemail());
-		
 		if (result == null) {
 			customerRepository.save(customer);
-			return "Account created successfully";
+			return 1;
 		}
 		else {
-			return "Account already exists";
+			return 0;
 		}
 	}
 	
@@ -62,22 +60,36 @@ public class CustomerService {
 	}
 	
 	
-//	public String placeOrder(Product product, int qtyOrdered) {
-//		if (product.getQty() < qtyOrdered) {
-//			return "Insufficient stock";
-//		}
-//		
-//		product.setQty(product.getQty()-qtyOrdered);
-//		productRepository.save(product);
-//		
-//		Orders orders = new Orders();
-//		orders.setQtyOrdered(qtyOrdered);
-//		orders.setProductOrdered(product);
-//		orders.setOrderDate();
-//		
-//		
-//		
-//	}
+	public int placeOrder(int pid, int qtyOrdered, int cid) {
+		
+		if (cid == -1) {
+			return -2;
+		}
+		
+		Optional<Product> result = productRepository.findById(pid);
+		if(result.isEmpty()) {
+			return -1;
+		}
+		
+		Product product = result.get();
+		if (product.getQty() < qtyOrdered){
+			return 0;
+		}
+		
+		Optional<Customer> user = customerRepository.findById(cid);
+	
+		product.setQty(product.getQty()-qtyOrdered);
+		productRepository.save(product);
+		
+		Orders orders = new Orders();
+		orders.setQtyOrdered(qtyOrdered);
+		orders.setProductOrdered(product);
+		orders.setOrderedBy(user.get());
+		orders.setOrderDate(LocalDate.now());
+		
+		ordersRepository.save(orders);
+		return 1;
+	}
 	
 	
 }
